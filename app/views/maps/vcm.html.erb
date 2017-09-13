@@ -37,31 +37,12 @@
  </fieldset>
 </div>
 </div>
-<h4> CSV Result </h4>
-
 <input id="traitValues" value='<%= @trait.trait %>' type="hidden" /> 
 <input id="traitgroupValues" value='<%= @group_array %>' type="hidden" /> 
-
-<% unless @csv_table.nil? %>
-<table id="vgs_table">
-<thead>
-  <tr>
-  <% @vgs_header.each do |header| %>
-    <th><%= header %></th>
-  <% end %> 
-  </tr>
-  </thead>
-  <tbody>
-  <% @vgs_body.each do |row| %>
-    <tr>
-    <% row.each do |element| %>
-      <td><%= element %></td>
-    <% end %>
-    </tr>
-  <% end %> 
-  </tbody>
-</table>
-<% end %>
+<div id="matrix">
+    <div style="display:inline-block;" id="legend"></div>
+    <div style="display:inline-block; float:left" id="container"></div>
+</div>
 
 <!-- Modal -->
 <div id="ctgmodal" class="modal fade" role="dialog">

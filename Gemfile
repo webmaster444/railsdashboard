@@ -15,6 +15,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'jquery-datatables-rails', '~> 3.4.0'
 gem 'jquery-minicolors-rails'
 gem 'pearson'
+gem "d3-rails", '~> 3.4.11'
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'capybara', '~> 2.13'

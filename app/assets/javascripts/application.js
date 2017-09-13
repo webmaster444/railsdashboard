@@ -17,4 +17,5 @@
 //= require dataTables/jquery.dataTables
 //= require dataTables/extras/dataTables.responsive
 //= require jquery.minicolors
+//= require d3
 //= require_tree .
