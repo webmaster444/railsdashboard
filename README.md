@@ -8,7 +8,7 @@
  ## Run app on your local
  
  <pre>
-$ git clone git://github.com/webmaster444/rtmapp.git
+$ git clone git://github.com/webmaster444/railsdashboard.git
 </pre>
 
 <pre>
