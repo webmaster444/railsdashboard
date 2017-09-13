@@ -66,26 +66,35 @@ class MapsController < ApplicationController
 			tmp_row   = Array.new
 			vgs_row   = Array.new
 
-			#Statistics Array
-			min_row    = Array.new
-			max_row    = Array.new
-			range_row  = Array.new
-			mean_row   = Array.new
-			median_row = Array.new
-
-			min_row.push('Minimum Score')
-			max_row.push('Maximum Score')			
+			#Statistics Array			
+			count80_row = Array.new
+			count20_row = Array.new
+			count40_row = Array.new
+			count60_row = Array.new
+			count100_row = Array.new
+		
+			count20_row.push('Count 0-20')
+			count40_row.push('Count 21-40')
+			count60_row.push('Count 41-60')
+			count80_row.push('Count 61-80')
+			count100_row.push('Count 81-100')
 			@vgs_header.each_with_index do |row, i| 
 				vgs_row = []
 				tmp_row = []
 				@csv_table.each do |row1|
 					tmp_row.push(row1[i+4])
-				end								
-				min_row.push(tmp_row.min)
-				max_row.push(tmp_row.max)				
-			end			
-			@vgs_body.push(min_row)
-			@vgs_body.push(max_row)			
+				end												
+				count20_row.push(count_min_to_max(tmp_row,0,20))				
+				count40_row.push(count_min_to_max(tmp_row,21,40))
+				count60_row.push(count_min_to_max(tmp_row,41,60))
+				count80_row.push(count_min_to_max(tmp_row,61,80))
+				count100_row.push(count_min_to_max(tmp_row,81,100))
+			end						
+			@vgs_body.push(count20_row)			
+			@vgs_body.push(count40_row)
+			@vgs_body.push(count60_row)
+			@vgs_body.push(count80_row)
+			@vgs_body.push(count100_row)
 			@vgs_header.unshift('Statistical Data Point')
 		end
 	end
@@ -117,20 +126,40 @@ class MapsController < ApplicationController
 			range_row  = Array.new
 			mean_row   = Array.new
 			median_row = Array.new
+			count80_row = Array.new
+			count20_row = Array.new
+			count40_row = Array.new
+			count60_row = Array.new
+			count100_row = Array.new
 
 			min_row.push('Minimum Score')
 			max_row.push('Maximum Score')			
+			count20_row.push('Count 0-20')
+			count40_row.push('Count 21-40')
+			count60_row.push('Count 41-60')
+			count80_row.push('Count 61-80')
+			count100_row.push('Count 81-100')
 			@vgs_header.each_with_index do |row, i| 
 				vgs_row = []
 				tmp_row = []
 				@csv_table.each do |row1|
 					tmp_row.push(row1[i+4])
 				end								
-				min_row.push(tmp_row.min)
-				max_row.push(tmp_row.max)				
+				min_row.push(tmp_row.min)				
+				max_row.push(tmp_row.max)
+				count20_row.push(count_min_to_max(tmp_row,0,20))				
+				count40_row.push(count_min_to_max(tmp_row,21,40))
+				count60_row.push(count_min_to_max(tmp_row,41,60))
+				count80_row.push(count_min_to_max(tmp_row,61,80))
+				count100_row.push(count_min_to_max(tmp_row,81,100))
 			end			
 			@vgs_body.push(min_row)
 			@vgs_body.push(max_row)			
+			@vgs_body.push(count20_row)			
+			@vgs_body.push(count40_row)
+			@vgs_body.push(count60_row)
+			@vgs_body.push(count80_row)
+			@vgs_body.push(count100_row)
 			@vgs_header.unshift('Statistical Data Point')
 		end
 	end
@@ -180,45 +209,56 @@ class MapsController < ApplicationController
 		params.require(:map).permit(:datapoints, :maptitle)
 	end	  
 	def stats_min(data)
-    data.min
-  end
-  def stats_max(data)
-    data.max
-  end
-  def stats_average(data)
-    total = data.inject(:+)
-    len = data.length
-    average = data.to_f / len 
-  end
-  def stats_mode(data)
-    data = [1, 1, 1, 2, 3]
-    freq = data.inject(Hash.new(0)) { |h,v| h[v] += 1; h }
-    data.max_by { |v| freq[v] }
-  end
+	    data.min
+  	end
+  	def stats_max(data)
+    	data.max
+  	end
+  	def stats_average(data)
+    	total = data.inject(:+)
+    	len = data.length
+    	average = data.to_f / len 
+  	end
+  	def stats_mode(data)
+    	data = [1, 1, 1, 2, 3]
+    	freq = data.inject(Hash.new(0)) { |h,v| h[v] += 1; h }
+    	data.max_by { |v| freq[v] }
+  	end
 
-  def sum
-    self.inject(0){|accum, i| accum + i }
-  end
+  	def sum
+    	self.inject(0){|accum, i| accum + i }
+  	end
 
-  def mean
-    self.sum/self.length.to_f
-  end
+	def mean
+    	self.sum/self.length.to_f
+  	end
 
-  def sample_variance
-    m = self.mean
-    sum = self.inject(0){|accum, i| accum +(i-m)**2 }
-    sum/(self.length - 1).to_f
-  end
+  	def sample_variance
+    	m = self.mean
+    	sum = self.inject(0){|accum, i| accum +(i-m)**2 }
+    	sum/(self.length - 1).to_f
+  	end
 
-  def standard_deviation
-    return Math.sqrt(self.sample_variance)
-  end
+  	def standard_deviation
+    	return Math.sqrt(self.sample_variance)
+  	end
   
-  def percentile(values, percentile)
-    values_sorted = values.sort
-    k = (percentile*(values_sorted.length-1)+1).floor - 1
-    f = (percentile*(values_sorted.length-1)+1).modulo(1)
+  	def percentile(values, percentile)
+    	values_sorted = values.sort
+    	k = (percentile*(values_sorted.length-1)+1).floor - 1
+    	f = (percentile*(values_sorted.length-1)+1).modulo(1)
+		return values_sorted[k] + (f * (values_sorted[k+1] - values_sorted[k]))
+	end
+	def count_min_to_max(arr,min,max)
+  		cnt = 0
+  		arr.each do |element|  		
+  			if ( element.to_f >= min.to_f && element.to_f <=max.to_f)
+				  cnt +=1
+				end		
+  		end  	
+  		cnt
+ 	end
+ end
 
-    return values_sorted[k] + (f * (values_sorted[k+1] - values_sorted[k]))
-  end
-end
+  	
+  
