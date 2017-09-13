@@ -45,15 +45,18 @@ class MapsController < ApplicationController
 		end
 	end
 
-	def vcm
+	def vcm		
 		@map = Map.find(params[:id])	
 
 		@trait = Trait.find(@map.trait_id)
-		group_ids = @map.traitgroups_id.split(',')
-		@traitgroups = Traitgroup.find(group_ids)		
-		@group_array = Array.new
-		@traitgroups.each do |group|
-			@group_array.push(group.trait_group_name)
+		unless @map.traitgroups_id.nil?
+			group_ids = @map.traitgroups_id.split(',')
+
+			@traitgroups = Traitgroup.find(group_ids)		
+			@group_array = Array.new
+			@traitgroups.each do |group|
+				@group_array.push(group.trait_group_name)
+			end
 		end
 
 		unless @map.sourcefile.nil?
@@ -103,11 +106,14 @@ class MapsController < ApplicationController
 		@map = Map.find(params[:id])	
 
 		@trait = Trait.find(@map.trait_id)
-		group_ids = @map.traitgroups_id.split(',')
-		@traitgroups = Traitgroup.find(group_ids)		
-		@group_array = Array.new
-		@traitgroups.each do |group|
-			@group_array.push(group.trait_group_name)
+		unless @map.traitgroups_id.nil?
+			group_ids = @map.traitgroups_id.split(',')
+
+			@traitgroups = Traitgroup.find(group_ids)		
+			@group_array = Array.new
+			@traitgroups.each do |group|
+				@group_array.push(group.trait_group_name)
+			end
 		end
 
 		unless @map.sourcefile.nil?
@@ -250,15 +256,20 @@ class MapsController < ApplicationController
 		return values_sorted[k] + (f * (values_sorted[k+1] - values_sorted[k]))
 	end
 	def count_min_to_max(arr,min,max)
-  		cnt = 0
+		cnt = 0
   		arr.each do |element|  		
   			if ( element.to_f >= min.to_f && element.to_f <=max.to_f)
 				  cnt +=1
 				end		
   		end  	
-  		cnt
+		cnt
  	end
- end
+ 	def calc_cor(x,y,n)
+ 		deno = sqrt(x**2 - (x**2)/n) * sqrt(y**2 - (y**2)/n)
+ 		nume = x*y - x*y/n
+ 		nume / deno
+ 	end 	
+end
 
   	
   
