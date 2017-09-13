@@ -1,0 +1,74 @@
+<div class="register-form">
+  <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :role => 'form'}) do |f| %>
+    <div class="form-header">
+    <span>Add / Manage User</span>
+    </div>
+    <div class="form-body">
+      <%= devise_error_messages! %>
+      <div class="form-group">
+        <%= f.label :name, 'Account Name' %>
+        <%= f.text_field :name, :autofocus => true, class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= f.label :email, 'Account Email' %>
+        <%= f.email_field :email, class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= f.label :contact, 'Contact' %>
+        <%= f.text_field :contact, class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= f.label :phone, 'Phone' %>
+        <%= f.text_field :phone, class: 'form-control' %>
+      </div>
+
+      <div id='privilege_section'>
+      <div class="form-group">
+        <%= f.label :role,'User Type' %>
+        <%= f.select(:role, User.roles.keys.map {|role| [role.titleize,role]}) %>
+      </div>
+
+      <label class="privilege-select">
+      <%= check_box_tag :caa, '1', false %>
+        Create/Edit Admin Accounts
+      </label>
+      <label class="privilege-select">
+      <%= check_box_tag :cua, '1', false %>
+        Create/Edit User Accounts
+      </label>
+      <label class="privilege-select">
+      <%= check_box_tag :pm, '1', false %>
+        Publish Maps
+      </label>
+      <label class="privilege-select">
+      <%= check_box_tag :vsd, '1', false %>
+        View/Edit Source Data
+      </label>
+      <label class="privilege-select">
+      <%= check_box_tag :eci, '1', false %>
+        Export Chart Image
+      </label>
+      <label class="privilege-select">
+        <%= check_box_tag :etp, '1', false %>
+          Export to PDF
+      </label>      
+      </div>
+      <div class="form-group">
+        <%= f.label :password %>
+        <%= f.password_field :password, class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= f.label :password_confirmation %>
+        <%= f.password_field :password_confirmation, class: 'form-control' %>
+      </div>
+      <div class='form-group'>
+        <%= link_to 'Enable Account', "/users", :class=>'btn outlined-btn', :id=>'enable_btn'%> 
+        <%= link_to 'Disable Account', "/users", :class=>'btn outlined-btn', :id=>'disable_btn'%> 
+      </div>
+      <div class='form-group'>
+        <%= link_to 'Cancel', "/users", :class=>'btn outlined-btn' %> 
+        <%= f.submit 'Save', :class => 'button right', :id=>'save_btn'%>      
+      </div>
+    </div>
+  <% end %>
+</div>

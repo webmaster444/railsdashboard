@@ -1,0 +1,22 @@
+<div class="register-form">
+  
+<%= form_for :map, url: maps_path do |f| %>
+    <div class="form-header">
+    <span>Add / Manage Map</span>
+    </div>
+    <div class="form-body">      
+      <div class="form-group">
+        <%= f.label :maptitle, 'Map title' %>
+        <%= f.text_field :maptitle, :autofocus => true, class: 'form-control' %>
+      </div>      
+      <div class="form-group">
+        <%= f.label :datapoints, 'Data Points' %>
+        <%= f.number_field :datapoints, class: 'form-control' %>
+      </div>
+      <div class='form-group'>
+        <%= link_to 'Cancel', maps_path, :class=>'btn outlined-btn' %> 
+        <%= f.submit 'Save', :class => 'button right', :id=>'save_btn'%>      
+      </div>
+    </div>
+  <% end %>
+</div>

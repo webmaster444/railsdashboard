@@ -1,0 +1,16 @@
+<h1>Listing maps</h1>
+ 
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Text</th>
+  </tr>
+ 
+  <% @maps.each do |map| %>
+    <tr>
+      <td><%= map.maptitle %></td>
+      <td><%= map.datapoints %></td>
+      <td><%= link_to 'Show', map_path(map) %></td>
+    </tr>
+  <% end %>
+</table>

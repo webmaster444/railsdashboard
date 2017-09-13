@@ -1,0 +1,75 @@
+<div class="register-form">
+  <%= form_for(@user) do |f| %>    
+    <div class="form-header">
+    <span>Add / Manage User</span>
+    </div>
+    <div class="form-body">      
+      <div class="form-group">
+        <%= f.label :name, 'Account Name' %>
+        <%= f.text_field :name, :autofocus => true, class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= f.label :email, 'Account Email' %>
+        <%= f.email_field :email, class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= f.label :contact, 'Contact' %>
+        <%= f.text_field :contact, class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= f.label :phone, 'Phone' %>
+        <%= f.text_field :phone, class: 'form-control' %>
+      </div>
+
+      <div id='privilege_section'>
+      <div class="form-group">
+        <%= f.label :role,'User Type' %>
+        <%= f.select(:role, User.roles.keys.map {|role| [role.titleize,role]}) %>
+      </div>
+      <label class="privilege-select">
+      <%= f.check_box :caa%> 
+        Create/Edit Admin Accounts
+      </label>
+
+      <label class="privilege-select">
+      <%= f.check_box :cua%> 
+        Create/Edit User Accounts
+      </label>
+
+      <label class="privilege-select">
+      <%= f.check_box :pm%> 
+        Publish Maps
+      </label>
+
+      <label class="privilege-select">
+      <%= f.check_box :vsd%>
+        View/Edit Source Data
+      </label>
+      <label class="privilege-select">
+      <%= f.check_box :eci%>
+        Export Chart Image
+      </label>
+      <label class="privilege-select">
+        <%= f.check_box :etp%>
+          Export to PDF
+      </label>      
+      </div>
+      <div class="form-group">
+        <%= f.label :password %>
+        <%= f.password_field :password, class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= f.label :password_confirmation %>
+        <%= f.password_field :password_confirmation, class: 'form-control' %>
+      </div>
+      <div class='form-group'>
+        <%= link_to 'Enable Account', "/users", :class=>'btn outlined-btn', :id=>'enable_btn'%> 
+        <%= link_to 'Disable Account', "/users", :class=>'btn outlined-btn', :id=>'disable_btn'%> 
+      </div>
+      <div class='form-group'>
+        <%= link_to 'Cancel', "/users", :class=>'btn outlined-btn' %> 
+        <%= f.submit 'Save', :class => 'button right', :id=>'save_btn'%>      
+      </div>
+    </div>
+  <% end %>
+</div>

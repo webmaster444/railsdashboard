@@ -1,0 +1,21 @@
+<td>
+	<%= user.name.titleize unless user.name.nil?%>
+</td>
+<td>
+  <%= link_to user.email, user %>
+</td>
+<td>
+	<%= user.created_at %>
+</td>
+<td>
+	Active
+</td>
+<td>  
+  <%= user.role.titleize %>
+</td>
+<td>
+  <%= link_to("Update user", edit_user_path(user), :method => :get, :class => 'button-xs') %>  
+</td>
+<td>
+  <%= link_to("Delete user", user_path(user), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'button-xs') unless user == current_user %>
+</td>

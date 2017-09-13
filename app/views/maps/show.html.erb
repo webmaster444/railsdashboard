@@ -1,0 +1,30 @@
+<h4> Source Data: <%= @map.maptitle %> </h4>
+<h4> Add Data to Map</h4>
+<%= form_tag import_maps_path, multipart: true do %>
+	<%= file_field_tag :sourcefile %>
+	<%= hidden_field_tag :id, @map.id%>
+	<%= submit_tag "Upload" %>
+<% end %>
+
+<h4> CSV Result </h4>
+
+<% unless @csv_table.nil? %>
+<table id="vsd_table">
+<thead>
+  <tr>
+  <% @csv_table.headers.each do |header| %>
+    <th><%= header %></th>
+  <% end %> 
+  </tr>
+  </thead>
+  <tbody>
+  <% @csv_table.each do |row| %>
+    <tr>
+    <% row.each do |element| %>
+      <td><%= element[1] %></td>
+    <% end %>
+    </tr>
+  <% end %> 
+  </tbody>
+</table>
+<% end %>

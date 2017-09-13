@@ -1,0 +1,13 @@
+<h3>Maps</h3>     
+<table id="more_maps_table" class="table responsive no-wrap">
+  <thead>
+    <%= render 'moremapshead' %>
+  </thead>
+  <tbody>
+    <% @map.each do |map| %>
+      <tr>
+        <%= render map %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>          

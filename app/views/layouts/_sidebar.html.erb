@@ -1,0 +1,57 @@
+<div class="nav-side-menu">
+    <div class="brand">Rapid Talent Mapping</div>
+    <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+    <div class="menu-list">
+        <ul id="menu-content" class="menu-content collapse out">
+            <li>
+                <span class="item-title"> User Management </span>
+            </li>
+            <li>
+                <a href="/users" class="menu-item">
+                    Manage Users
+                </a>
+            </li>
+            <li>
+                <a href="/register" class="menu-item">
+                    Add a User
+                </a>
+            </li>
+            <hr class="item-divider">
+            <li>
+                <span class="item-title"> My Map </span>
+            </li>                        
+
+            <li class="input">
+                <input id="search_map" type="text" placeholder="Find a Map" />
+            </li>            
+            
+            <% unless $g_maps.nil? %>
+              <% $g_maps.each_with_index do |map, index| %>
+              <% if(index <5) %>
+              <li>
+                <%= link_to map.maptitle, map_path(map) ,:class => 'menu-item'%>
+              </li>
+              <% end %>
+              <% end %>
+            <% end %>
+
+            <% if $g_maps.size > 5 %>
+            <li>
+                <%= s = $g_maps.size - 5
+                link_to '...' + s.to_s + ' more maps', '/maps/moremaps' ,:class => 'menu-item'%>
+            </li>
+            <% end %>
+            <li>                
+                <%= link_to 'Create New Map', new_map_path ,:class => 'createMapBtn'%>
+            </li>
+            <hr class="item-divider">
+            <li>
+                <span class="item-title"> Map Details </span>                
+            </li>            
+            <% unless $selectedmap.nil? %>
+            <%= render 'maps/detaillink' %>
+            <% end %>
+        </ul>
+    </div>
+</div> 
+

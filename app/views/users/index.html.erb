@@ -1,0 +1,15 @@
+<h3>Users</h3>     
+<table id="manage_users_table" class="table responsive no-wrap">
+  <thead>
+    <%= render 'userhead' %>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <%= render user %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>          
+
+

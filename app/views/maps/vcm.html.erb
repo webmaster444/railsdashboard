@@ -1,0 +1,110 @@
+<div class='row'>
+<h4> Population Correlation Matrix: <%= @map.maptitle %> </h4>
+<span> Select Data for Map Group Data Summary </span>
+<button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#ctgmodal"> Create Trait Group </button>
+</div>
+<div class='row'>
+<div class='col-sm-6'>
+ <fieldset>
+  <legend align="center">GROUPS</legend>
+  Include Groups: <textarea id="inGroups" name='tags2' placeholder='Add Groups'></textarea><br>
+  Exclude Groups: <textarea id="exGroups" name='tags2' placeholder='Add Groups'></textarea><br>  
+ </fieldset>
+</div>
+<div class='col-sm-6'>
+ <fieldset>
+  <legend align="center">TAGS</legend>
+  Include Tags: <textarea id="inTags" name='tags2' placeholder='Add Tags'></textarea><br>
+  Exclude Tags: <textarea id="exTags" name='tags2' placeholder='Add Tags'></textarea><br>  
+ </fieldset>
+</div>
+</div>
+
+<div class='row'>
+<div class='col-sm-6'>
+ <fieldset>
+  <legend align="center">TRAITS</legend>
+  Include Traits: <textarea id="inTraits" name='tags2' placeholder='Add Traits'></textarea><br>
+  Exclude Traits: <textarea id="exTraits" name='tags2' placeholder='Add Traits'></textarea><br>  
+ </fieldset>
+</div>
+
+<div class='col-sm-6'>
+ <fieldset>
+  <legend align="center">STATISTICS</legend>
+  Include Traits: <textarea id="inStats" name='tags2' placeholder='Add Statistics'></textarea><br>
+  Exclude Traits: <textarea id="exStats" name='tags2' placeholder='Add Statistics'></textarea><br>  
+ </fieldset>
+</div>
+</div>
+<h4> CSV Result </h4>
+
+<input id="traitValues" value='<%= @trait.trait %>' type="hidden" /> 
+<input id="traitgroupValues" value='<%= @group_array %>' type="hidden" /> 
+
+<% unless @csv_table.nil? %>
+<table id="vgs_table">
+<thead>
+  <tr>
+  <% @vgs_header.each do |header| %>
+    <th><%= header %></th>
+  <% end %> 
+  </tr>
+  </thead>
+  <tbody>
+  <% @vgs_body.each do |row| %>
+    <tr>
+    <% row.each do |element| %>
+      <td><%= element %></td>
+    <% end %>
+    </tr>
+  <% end %> 
+  </tbody>
+</table>
+<% end %>
+
+<!-- Modal -->
+<div id="ctgmodal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <%= form_tag ctg_maps_path, :id => 'ctg_modal', multipart: true do %>
+  
+  <%= hidden_field_tag :id, @map.id%>
+  <%= hidden_field_tag :selected_traits, @map.id%>
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Create/Manage Trait Group</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">          
+          <div class="col-12">            
+            <%= text_field_tag :trait_group_name, :autofocus => true, class: 'form-control', :required=>'required' %>
+          </div>
+          <div class="col-12">
+          <br/>
+          <p> Click to Select Traits to Include in Group </p>
+          </div>
+        </div>             
+        <% csv_headers = @csv_table.headers
+          csv_headers.shift(4)
+        %>
+        <div id="checkbox_wrapper">
+        <% csv_headers.each do |button| %>
+        <span class="button-checkbox">
+          <button type="button" class="btn" data-color="default"><%= button %></button>
+          <input type="checkbox" class="hidden" checked />
+        </span>                       
+        <% end %>   
+        </div>
+      </div>
+      <div class="modal-footer">
+        <%= submit_tag "Save", class: "btn btn-primary"%>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  <% end %>
+  </div>
+</div>

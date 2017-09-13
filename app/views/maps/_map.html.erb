@@ -1,0 +1,15 @@
+<td>
+	<%= map.maptitle.titleize unless map.maptitle.nil?%>
+</td>
+<td>
+  <%= 'N = ' + map.datapoints.to_s %>
+</td>
+<td>
+	<%= map.created_at %>
+</td>
+<td>
+	<%= map.updated_at %>
+</td>
+<td>
+	<%= link_to "Update Map", edit_map_path(map)%>
+</td>
