@@ -16,5 +16,7 @@ Rails.application.routes.draw do
 		get "maps/:id/vsd", to:"maps#vsd"
 		get "maps/:id/vgs", to:"maps#vgs" , as: "groupsummary"		
 		get "maps/:id/vcm", to:"maps#vcm" , as: "correlationmatrix"		
+		get "maps/:id/vsg", to:"maps#viewsinglegraph" , as: "singlegraph"
+		get "maps/:id/md", to:"maps#mapdashboard" , as: "mapdashboard"
 	end	
 end

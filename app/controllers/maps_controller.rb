@@ -210,6 +210,12 @@ class MapsController < ApplicationController
 			end
 		end
 	end
+
+	def viewsinglegraph
+	end
+
+	def mapdashboard
+	end
 	private
 	def map_params
 		params.require(:map).permit(:datapoints, :maptitle)
