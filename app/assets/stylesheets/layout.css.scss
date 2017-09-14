@@ -208,3 +208,10 @@ tags{
     stroke: #000;
     shape-rendering: crispEdges;
 }
+.cell text{
+    opacity: 0;
+}
+
+.cell{
+    cursor: pointer;
+}

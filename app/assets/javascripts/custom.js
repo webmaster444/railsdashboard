@@ -244,7 +244,12 @@ $(document).on('turbolinks:load', function() {
 	    .data(function(d) { return d; })
 			.enter().append("g")
 	    .attr("class", "cell")
-	    .attr("transform", function(d, i) { return "translate(" + x(i) + ", 0)"; });
+	    .attr("transform", function(d, i) { return "translate(" + x(i) + ", 0)"; })	 
+	    .on('mouseover',function(){
+	    	d3.select(this).select('text').style('opacity',1);
+	    }).on('mouseout',function(){
+	    	d3.select(this).select('text').style('opacity',0);
+	    });   
 
 	cell.append('rect')
 	    .attr("width", x.rangeBand())
@@ -257,7 +262,7 @@ $(document).on('turbolinks:load', function() {
 	    .attr("y", y.rangeBand() / 2)
 	    .attr("text-anchor", "middle")
 	    .style("fill", function(d, i) { return d >= maxValue/2 ? 'white' : 'black'; })
-	    .text(function(d, i) { return d; });
+	    .text(function(d, i) { return d; })	    
 
 	row.selectAll(".cell")
 	    .data(function(d, i) { return data[i]; })
